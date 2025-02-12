@@ -1,9 +1,55 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36" version="26.0.11">
   <diagram name="Halaman-1" id="6mauoHJxbwxYOIo2GaMX">
-    <mxGraphModel>
+    <mxGraphModel dx="1194" dy="558" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="VtA9cNqZad1sZP5H4mvO-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="VtA9cNqZad1sZP5H4mvO-3" target="VtA9cNqZad1sZP5H4mvO-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VtA9cNqZad1sZP5H4mvO-3" value="&lt;div&gt;Serangan web defacement terutama permasalahan judi online yang semakin marak sehingga menyebabkan turunnya kepercayaan masyarakat terhadap instansi terkait&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="59.389999999999986" width="270" height="82.17" as="geometry" />
+        </mxCell>
+        <mxCell id="VtA9cNqZad1sZP5H4mvO-4" value="Identifikasi Masalah" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="40" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="VtA9cNqZad1sZP5H4mvO-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="VtA9cNqZad1sZP5H4mvO-6" target="VtA9cNqZad1sZP5H4mvO-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VtA9cNqZad1sZP5H4mvO-6" value="Perlu suatu sistem untuk melakukan deteksi dan respon secara otomatis" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="59.389999999999986" width="250" height="82.17" as="geometry" />
+        </mxCell>
+        <mxCell id="VtA9cNqZad1sZP5H4mvO-7" value="Peluang" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="439.42" y="42" width="115.79" height="17.39" as="geometry" />
+        </mxCell>
+        <mxCell id="VtA9cNqZad1sZP5H4mvO-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="VtA9cNqZad1sZP5H4mvO-9">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="415" y="401.78" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VtA9cNqZad1sZP5H4mvO-9" value="Mengintegrasikan tools (Wazuh, TheHive, Cortex dan MISP) sebagai sistem deteksi dan management respon insiden serta penerapan script bash untuk program&amp;nbsp;&lt;i&gt;containment, eradication dan recovery&lt;/i&gt;&amp;nbsp;sebagai respon insiden otomatis terhadap serangan web defacement di lingkungan web server" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="237.43478260869563" width="550" height="82.17391304347827" as="geometry" />
+        </mxCell>
+        <mxCell id="VtA9cNqZad1sZP5H4mvO-10" value="Pendekatan" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="210.04347826086956" width="115.78947368421053" height="27.39130434782609" as="geometry" />
+        </mxCell>
+        <mxCell id="VtA9cNqZad1sZP5H4mvO-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="VtA9cNqZad1sZP5H4mvO-13">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="415" y="422" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="416" y="501" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VtA9cNqZad1sZP5H4mvO-12" value="Implementasi" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="374.3913043478261" width="115.78947368421053" height="27.39130434782609" as="geometry" />
+        </mxCell>
+        <mxCell id="VtA9cNqZad1sZP5H4mvO-13" value="Sistem deteksi dan respon insiden otomatis berdasarkan Framework IRLC NIST 800-61r2 dalam bentuk OVA monitoring dan program Script Bash sebagai respon insiden" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="579.8260869565217" width="550" height="82.17391304347827" as="geometry" />
+        </mxCell>
+        <mxCell id="VtA9cNqZad1sZP5H4mvO-14" value="Hasil" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="552.4347826086957" width="115.78947368421053" height="27.39130434782609" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
