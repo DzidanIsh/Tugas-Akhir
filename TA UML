@@ -1,9 +1,287 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36" version="26.1.0">
-  <diagram name="Halaman-1" id="05azNFwUfiIZIYyTcuC4">
-    <mxGraphModel>
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36" version="26.1.0" pages="7">
+  <diagram name="Use Case Diagram - Incident Response" id="05azNFwUfiIZIYyTcuC4">
+    <mxGraphModel dx="954" dy="558" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="jEKFxim-T_xAwr1LVy_0-1" value="Wazuh Manager" style="shape=actor;verticalLabelPosition=bottom;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="50" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="jEKFxim-T_xAwr1LVy_0-2" value="Apache Web Server" style="shape=actor;verticalLabelPosition=bottom;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="60" y="400" width="50" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="jEKFxim-T_xAwr1LVy_0-3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" vertex="1" parent="1">
+          <mxGeometry x="200" y="50" width="160" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="jEKFxim-T_xAwr1LVy_0-4" value="Deteksi dan Analisis" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="jEKFxim-T_xAwr1LVy_0-3">
+          <mxGeometry x="16" y="40" width="134" height="50.25" as="geometry" />
+        </mxCell>
+        <mxCell id="jEKFxim-T_xAwr1LVy_0-5" value="Containment" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="jEKFxim-T_xAwr1LVy_0-3">
+          <mxGeometry x="16" y="120" width="134" height="50.25" as="geometry" />
+        </mxCell>
+        <mxCell id="jEKFxim-T_xAwr1LVy_0-6" value="Eradication" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="jEKFxim-T_xAwr1LVy_0-3">
+          <mxGeometry x="16" y="200" width="134" height="50.25" as="geometry" />
+        </mxCell>
+        <mxCell id="jEKFxim-T_xAwr1LVy_0-7" value="Recovery" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="jEKFxim-T_xAwr1LVy_0-3">
+          <mxGeometry x="16" y="280" width="134" height="50.25" as="geometry" />
+        </mxCell>
+        <mxCell id="jEKFxim-T_xAwr1LVy_0-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="jEKFxim-T_xAwr1LVy_0-1" target="jEKFxim-T_xAwr1LVy_0-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="110" y="115" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="jEKFxim-T_xAwr1LVy_0-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="jEKFxim-T_xAwr1LVy_0-2" target="jEKFxim-T_xAwr1LVy_0-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="jEKFxim-T_xAwr1LVy_0-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;html=1;" edge="1" parent="1" source="jEKFxim-T_xAwr1LVy_0-5" target="jEKFxim-T_xAwr1LVy_0-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="jEKFxim-T_xAwr1LVy_0-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;html=1;" edge="1" parent="1" source="jEKFxim-T_xAwr1LVy_0-6" target="jEKFxim-T_xAwr1LVy_0-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="YjYt026LKiDockSrouOm" name=" Activity Diagram">
+    <mxGraphModel dx="232" dy="557" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="d-dShzzR4PidtrGiituQ-1" value="" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="40" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="d-dShzzR4PidtrGiituQ-2" value="Menerima Alert dari Wazuh" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="70" y="100" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="d-dShzzR4PidtrGiituQ-3" value="Analisis dan Identifikasi File Terkena" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="70" y="170" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="d-dShzzR4PidtrGiituQ-4" value="Containment: Blok IP, Mode Maintenance, Read-only" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="70" y="240" width="300" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="d-dShzzR4PidtrGiituQ-5" value="Eradication: Bersihkan atau Karantina File" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="70" y="310" width="260" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="d-dShzzR4PidtrGiituQ-6" value="Recovery: Restore dari Backup (jika perlu)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="70" y="380" width="280" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="d-dShzzR4PidtrGiituQ-7" value="Kirim Notifikasi Insiden" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="70" y="450" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="d-dShzzR4PidtrGiituQ-8" value="" style="shape=doubleEllipse;whiteSpace=wrap;html=1;fillColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="530" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="d-dShzzR4PidtrGiituQ-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="d-dShzzR4PidtrGiituQ-1" target="d-dShzzR4PidtrGiituQ-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d-dShzzR4PidtrGiituQ-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="d-dShzzR4PidtrGiituQ-2" target="d-dShzzR4PidtrGiituQ-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d-dShzzR4PidtrGiituQ-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="d-dShzzR4PidtrGiituQ-3" target="d-dShzzR4PidtrGiituQ-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d-dShzzR4PidtrGiituQ-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="d-dShzzR4PidtrGiituQ-4" target="d-dShzzR4PidtrGiituQ-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d-dShzzR4PidtrGiituQ-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="d-dShzzR4PidtrGiituQ-5" target="d-dShzzR4PidtrGiituQ-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d-dShzzR4PidtrGiituQ-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="d-dShzzR4PidtrGiituQ-6" target="d-dShzzR4PidtrGiituQ-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d-dShzzR4PidtrGiituQ-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="d-dShzzR4PidtrGiituQ-7" target="d-dShzzR4PidtrGiituQ-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="yz4S1bdS4i4pCg2ke4QH" name="Halaman-3">
+    <mxGraphModel dx="573" dy="1238" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="nC64AVRn6tWtaA2yM3h1" name="Component Diagram">
+    <mxGraphModel dx="331" dy="796" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="CKTjH1TODkpbnNRMP7uS-2" value="Incident Response System" style="swimlane;html=1;horizontal=0;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="130" width="400" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="CKTjH1TODkpbnNRMP7uS-3" value="IncidentResponse Class" style="shape=component;whiteSpace=wrap;html=1;" vertex="1" parent="CKTjH1TODkpbnNRMP7uS-2">
+          <mxGeometry x="60" y="40" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="CKTjH1TODkpbnNRMP7uS-4" value="SystemRestore Class" style="shape=component;whiteSpace=wrap;html=1;" vertex="1" parent="CKTjH1TODkpbnNRMP7uS-2">
+          <mxGeometry x="60" y="130" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="CKTjH1TODkpbnNRMP7uS-5" value="Logging Module" style="shape=component;whiteSpace=wrap;html=1;" vertex="1" parent="CKTjH1TODkpbnNRMP7uS-2">
+          <mxGeometry x="60" y="220" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="CKTjH1TODkpbnNRMP7uS-6" value="Notification Service" style="shape=component;whiteSpace=wrap;html=1;" vertex="1" parent="CKTjH1TODkpbnNRMP7uS-2">
+          <mxGeometry x="60" y="310" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="CKTjH1TODkpbnNRMP7uS-7" value="Wazuh Manager" style="shape=component;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="190" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="CKTjH1TODkpbnNRMP7uS-8" value="Apache Web Server" style="shape=component;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="190" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="CKTjH1TODkpbnNRMP7uS-9" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="CKTjH1TODkpbnNRMP7uS-7" target="CKTjH1TODkpbnNRMP7uS-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="CKTjH1TODkpbnNRMP7uS-10" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="CKTjH1TODkpbnNRMP7uS-2" target="CKTjH1TODkpbnNRMP7uS-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="kYdAjRI_U97b6fhAcXld" name="State Machine Diagram">
+    <mxGraphModel dx="1307" dy="744" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="CRXBwDiTbgVLfPXVPvVk-2" value="Idle" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="210" y="50" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="CRXBwDiTbgVLfPXVPvVk-3" value="Alert Received" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="490" y="50" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="CRXBwDiTbgVLfPXVPvVk-4" value="Analyzing Incident" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="480" y="170" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="CRXBwDiTbgVLfPXVPvVk-5" value="Containment Actions" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="300" y="170" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="CRXBwDiTbgVLfPXVPvVk-6" value="Eradication Actions" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="300" y="300" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="CRXBwDiTbgVLfPXVPvVk-7" value="Recovery Actions" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="480" y="300" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="CRXBwDiTbgVLfPXVPvVk-8" value="Notify and Return to Idle" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="470" y="430" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="CRXBwDiTbgVLfPXVPvVk-9" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="CRXBwDiTbgVLfPXVPvVk-2" target="CRXBwDiTbgVLfPXVPvVk-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="CRXBwDiTbgVLfPXVPvVk-10" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="CRXBwDiTbgVLfPXVPvVk-3" target="CRXBwDiTbgVLfPXVPvVk-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="CRXBwDiTbgVLfPXVPvVk-11" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="CRXBwDiTbgVLfPXVPvVk-4" target="CRXBwDiTbgVLfPXVPvVk-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="CRXBwDiTbgVLfPXVPvVk-12" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="CRXBwDiTbgVLfPXVPvVk-5" target="CRXBwDiTbgVLfPXVPvVk-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="CRXBwDiTbgVLfPXVPvVk-13" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="CRXBwDiTbgVLfPXVPvVk-6" target="CRXBwDiTbgVLfPXVPvVk-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="CRXBwDiTbgVLfPXVPvVk-14" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="CRXBwDiTbgVLfPXVPvVk-7" target="CRXBwDiTbgVLfPXVPvVk-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="CRXBwDiTbgVLfPXVPvVk-15" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="CRXBwDiTbgVLfPXVPvVk-8" target="CRXBwDiTbgVLfPXVPvVk-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="5rmbuttGyPGv_mDR2UXq" name="Halaman-6">
+    <mxGraphModel dx="258" dy="557" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="MuWDlDYN5ABfY6wuQ3Xt-1" value="Monitoring VM" style="shape=swimlane;swimlaneLine=0;html=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="50" width="300" height="350" as="geometry" />
+        </mxCell>
+        <mxCell id="MuWDlDYN5ABfY6wuQ3Xt-2" value="Wazuh Manager" style="shape=component;whiteSpace=wrap;html=1;" vertex="1" parent="MuWDlDYN5ABfY6wuQ3Xt-1">
+          <mxGeometry x="90" y="60" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MuWDlDYN5ABfY6wuQ3Xt-3" value="MISP" style="shape=component;whiteSpace=wrap;html=1;" vertex="1" parent="MuWDlDYN5ABfY6wuQ3Xt-1">
+          <mxGeometry x="30" y="170" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MuWDlDYN5ABfY6wuQ3Xt-5" value="Web Server VM" style="shape=swimlane;swimlaneLine=0;html=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="414" y="50" width="296" height="350" as="geometry" />
+        </mxCell>
+        <mxCell id="MuWDlDYN5ABfY6wuQ3Xt-7" value="Wazuh Agent" style="shape=component;whiteSpace=wrap;html=1;" vertex="1" parent="MuWDlDYN5ABfY6wuQ3Xt-5">
+          <mxGeometry x="70" y="240" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MuWDlDYN5ABfY6wuQ3Xt-8" value="Incident Response Script" style="shape=component;whiteSpace=wrap;html=1;" vertex="1" parent="MuWDlDYN5ABfY6wuQ3Xt-5">
+          <mxGeometry x="60" y="170" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MuWDlDYN5ABfY6wuQ3Xt-6" value="Apache Web Server" style="shape=component;whiteSpace=wrap;html=1;" vertex="1" parent="MuWDlDYN5ABfY6wuQ3Xt-5">
+          <mxGeometry x="50" y="70" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MuWDlDYN5ABfY6wuQ3Xt-12" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="MuWDlDYN5ABfY6wuQ3Xt-5" source="MuWDlDYN5ABfY6wuQ3Xt-6" target="MuWDlDYN5ABfY6wuQ3Xt-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MuWDlDYN5ABfY6wuQ3Xt-9" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="MuWDlDYN5ABfY6wuQ3Xt-7" target="MuWDlDYN5ABfY6wuQ3Xt-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="220" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MuWDlDYN5ABfY6wuQ3Xt-10" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;dashed=1;" edge="1" parent="1" source="MuWDlDYN5ABfY6wuQ3Xt-2" target="MuWDlDYN5ABfY6wuQ3Xt-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MuWDlDYN5ABfY6wuQ3Xt-13" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="MuWDlDYN5ABfY6wuQ3Xt-2" target="MuWDlDYN5ABfY6wuQ3Xt-6">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="260" y="140" as="sourcePoint" />
+            <mxPoint x="600" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="GRnrhhfPe8y59vY6yDWh" name="Halaman-7">
+    <mxGraphModel dx="1032" dy="1756" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="8TMNpmaIwv0F_CnTCwWQ-15" value="Incident Response System" style="shape=umlLifeline;" vertex="1" parent="1">
+          <mxGeometry x="50" y="50" width="140" height="500" as="geometry" />
+        </mxCell>
+        <mxCell id="8TMNpmaIwv0F_CnTCwWQ-16" value="SystemRestore Module" style="shape=umlLifeline;" vertex="1" parent="1">
+          <mxGeometry x="250" y="190" width="140" height="500" as="geometry" />
+        </mxCell>
+        <mxCell id="8TMNpmaIwv0F_CnTCwWQ-18" value="Web Server Services" style="shape=umlLifeline;" vertex="1" parent="1">
+          <mxGeometry x="660" y="100" width="140" height="500" as="geometry" />
+        </mxCell>
+        <mxCell id="8TMNpmaIwv0F_CnTCwWQ-19" value="Trigger Full Restore" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="8TMNpmaIwv0F_CnTCwWQ-15" target="8TMNpmaIwv0F_CnTCwWQ-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8TMNpmaIwv0F_CnTCwWQ-20" value="Stop Web Services" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="8TMNpmaIwv0F_CnTCwWQ-16" target="8TMNpmaIwv0F_CnTCwWQ-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8TMNpmaIwv0F_CnTCwWQ-21" value="Select Latest Backup" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="8TMNpmaIwv0F_CnTCwWQ-16" target="8TMNpmaIwv0F_CnTCwWQ-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8TMNpmaIwv0F_CnTCwWQ-22" value="Copy Files to Web Root" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="8TMNpmaIwv0F_CnTCwWQ-17" target="8TMNpmaIwv0F_CnTCwWQ-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8TMNpmaIwv0F_CnTCwWQ-23" value="Restore Configurations" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="8TMNpmaIwv0F_CnTCwWQ-17" target="8TMNpmaIwv0F_CnTCwWQ-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8TMNpmaIwv0F_CnTCwWQ-24" value="Start Web Services" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="8TMNpmaIwv0F_CnTCwWQ-17" target="8TMNpmaIwv0F_CnTCwWQ-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8TMNpmaIwv0F_CnTCwWQ-25" value="Report Restore Status" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="8TMNpmaIwv0F_CnTCwWQ-16" target="8TMNpmaIwv0F_CnTCwWQ-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8TMNpmaIwv0F_CnTCwWQ-26" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="8TMNpmaIwv0F_CnTCwWQ-16" target="8TMNpmaIwv0F_CnTCwWQ-17">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="390" y="440" as="sourcePoint" />
+            <mxPoint x="650" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8TMNpmaIwv0F_CnTCwWQ-17" value="Backup Directory" style="shape=umlLifeline;" vertex="1" parent="1">
+          <mxGeometry x="450" y="-90" width="140" height="500" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
