@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36" version="26.1.0" pages="7">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36" version="26.1.0" pages="6">
   <diagram name="Use Case Diagram - Incident Response" id="05azNFwUfiIZIYyTcuC4">
     <mxGraphModel dx="954" dy="558" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -45,7 +45,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="YjYt026LKiDockSrouOm" name=" Activity Diagram">
-    <mxGraphModel dx="232" dy="557" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1633" dy="930" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -94,14 +94,6 @@
         <mxCell id="d-dShzzR4PidtrGiituQ-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="d-dShzzR4PidtrGiituQ-7" target="d-dShzzR4PidtrGiituQ-8">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
-  <diagram id="yz4S1bdS4i4pCg2ke4QH" name="Halaman-3">
-    <mxGraphModel dx="573" dy="1238" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
       </root>
     </mxGraphModel>
   </diagram>
@@ -190,8 +182,8 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram id="5rmbuttGyPGv_mDR2UXq" name="Halaman-6">
-    <mxGraphModel dx="258" dy="557" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+  <diagram id="5rmbuttGyPGv_mDR2UXq" name=" deployment diagram">
+    <mxGraphModel dx="980" dy="558" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
