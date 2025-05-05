@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<!-- 
+  Konfigurasi Sysmon untuk Integrasi Wazuh-MISP 
+  Konfigurasi ini disesuaikan untuk mendeteksi IoC dan aktivitas mencurigakan di Windows
+  Lokasi Instalasi: C:\Windows\config\sysmon.xml
+  Instalasi: sysmon.exe -i C:\Windows\config\sysmon.xml
+-->
+<Sysmon schemaversion="4.50">
+  <HashAlgorithms>md5,sha256,IMPHASH</HashAlgorithms>
+  <CheckRevocation/>
+  
+  <!-- Monitoring proses yang dibuat (Event ID 1) -->
+  <EventFiltering>
+    <ProcessCreate onmatch="exclude">
+      <!-- Proses yang dilakukan pengecualian -->
+      <Image condition="is">C:\Windows\System32\svchost.exe</Image>
+      <Image condition="is">C:\Windows\System32\wininit.exe</Image>
+      <Image condition="is">C:\Windows\System32\services.exe</Image>
+      <Image condition="is">C:\Windows\System32\lsass.exe</Image>
+      <Image condition="is">C:\Windows\System32\csrss.exe</Image>
+    </ProcessCreate>
+  </EventFiltering>
+  
+  <!-- Monitoring perubahan waktu pembuatan file (Event ID 2) -->
+  <EventFiltering>
+    <FileCreateTime onmatch="exclude">
+      <Image condition="is">C:\Windows\System32\svchost.exe</Image>
+      <Image condition="contains">C:\Windows\explorer.exe</Image>
+    </FileCreateTime>
+  </EventFiltering>
+  
+  <!-- Monitoring koneksi jaringan (Event ID 3) -->
+  <EventFiltering>
+    <NetworkConnect onmatch="exclude">
+      <!-- Pengecualian untuk mengurangi noise -->
+      <Image condition="is">C:\Windows\System32\svchost.exe</Image>
+      <Image condition="contains">Windows Defender</Image>
+      <DestinationPort condition="is">53</DestinationPort>
+      <DestinationPort condition="is">443</DestinationPort>
+      <!-- Nonaktifkan pengecualian di bawah ini jika ingin melihat semua koneksi HTTPS -->
+      <!-- <DestinationPort condition="is">80</DestinationPort> -->
+    </NetworkConnect>
+  </EventFiltering>
+  
+  <!-- Monitoring perubahan status proses (Event ID 5) -->
+  <EventFiltering>
+    <ProcessTerminate onmatch="exclude">
+      <Image condition="is">C:\Windows\System32\svchost.exe</Image>
+    </ProcessTerminate>
+  </EventFiltering>
+  
+  <!-- Monitoring Driver yang Dimuat (Event ID 6) -->
+  <EventFiltering>
+    <DriverLoad onmatch="exclude">
+      <Signature condition="contains">Microsoft Windows</Signature>
+      <Signature condition="contains">Microsoft Corporation</Signature>
+    </DriverLoad>
+  </EventFiltering>
+  
+  <!-- Monitoring DLL yang Dimuat (Event ID 7) -->
+  <EventFiltering>
+    <ImageLoad onmatch="include">
+      <!-- Track only interesting DLLs -->
+      <ImageLoaded condition="contains">system32\ws2_32.dll</ImageLoaded>
+      <ImageLoaded condition="contains">wininet.dll</ImageLoaded>
+      <ImageLoaded condition="contains">cryptdll.dll</ImageLoaded>
+      <ImageLoaded condition="contains">crypt32.dll</ImageLoaded>
+      <ImageLoaded condition="contains">winsock.dll</ImageLoaded>
+      <ImageLoaded condition="contains">vbe6.dll</ImageLoaded>
+      <ImageLoaded condition="contains">scrrun.dll</ImageLoaded>
+      <ImageLoaded condition="contains">ntoskrnl.exe</ImageLoaded>
+    </ImageLoad>
+  </EventFiltering>
+  
+  <!-- Monitoring Remote Thread Creation (Event ID 8) - Penting untuk deteksi Injection -->
+  <EventFiltering>
+    <CreateRemoteThread onmatch="exclude"/>
+  </EventFiltering>
+  
+  <!-- Monitoring Raw Disk Access (Event ID 9) -->
+  <EventFiltering>
+    <RawAccessRead onmatch="exclude">
+      <Image condition="contains">Windows Defender</Image>
+    </RawAccessRead>
+  </EventFiltering>
+  
+  <!-- Monitoring Akses Proses (Event ID 10) -->
+  <EventFiltering>
+    <ProcessAccess onmatch="exclude">
+      <SourceImage condition="is">C:\Windows\System32\svchost.exe</SourceImage>
+      <TargetImage condition="is">C:\Windows\System32\lsass.exe</TargetImage>
+    </ProcessAccess>
+  </EventFiltering>
+  
+  <!-- Monitoring Pembuatan File (Event ID 11) -->
+  <EventFiltering>
+    <FileCreate onmatch="exclude">
+      <Image condition="is">C:\Windows\System32\svchost.exe</Image>
+      <TargetFilename condition="contains">AppData\Local\Temp</TargetFilename>
+      <TargetFilename condition="end with">.log</TargetFilename>
+      <TargetFilename condition="end with">.txt</TargetFilename>
+    </FileCreate>
+  </EventFiltering>
+  
+  <!-- Monitoring Registry Events (Event ID 12-14) -->
+  <EventFiltering>
+    <RegistryEvent onmatch="exclude">
+      <!-- Dinonaktifkan karena terlalu banyak events, aktifkan jika diperlukan -->
+      <Image condition="is">C:\Windows\System32\svchost.exe</Image>
+    </RegistryEvent>
+  </EventFiltering>
+  
+  <!-- Monitoring File Stream Creation (Event ID 15) -->
+  <EventFiltering>
+    <FileCreateStreamHash onmatch="exclude"/>
+  </EventFiltering>
+  
+  <!-- Monitoring Konfigurasi Service (Event ID 16) -->
+  <EventFiltering>
+    <ServiceConfigurationChange onmatch="exclude"/>
+  </EventFiltering>
+  
+  <!-- Monitoring Pipe Events (Event ID 17-18) -->
+  <EventFiltering>
+    <PipeEvent onmatch="exclude"/>
+  </EventFiltering>
+  
+  <!-- Monitoring WMI Events (Event ID 19-21) -->
+  <EventFiltering>
+    <WmiEvent onmatch="exclude"/>
+  </EventFiltering>
+  
+  <!-- Penting: DNS Query (Event ID 22) - Sangat penting untuk integrasi dengan MISP -->
+  <EventFiltering>
+    <DnsQuery onmatch="exclude">
+      <!-- Pengecualian untuk mengurangi noise -->
+      <QueryName condition="end with">microsoft.com</QueryName>
+      <QueryName condition="end with">windows.com</QueryName>
+      <QueryName condition="end with">in-addr.arpa</QueryName>
+      <QueryName condition="is">localhost</QueryName>
+      <QueryName condition="end with">local</QueryName>
+      <QueryName condition="is">localhost.localdomain</QueryName>
+    </DnsQuery>
+  </EventFiltering>
+  
+  <!-- Monitoring FileDelete events dengan Arsip (Event ID 23-24) -->
+  <EventFiltering>
+    <FileDelete onmatch="exclude">
+      <TargetFilename condition="contains">AppData\Local\Temp</TargetFilename>
+      <TargetFilename condition="end with">.log</TargetFilename>
+      <TargetFilename condition="end with">.txt</TargetFilename>
+    </FileDelete>
+  </EventFiltering>
+</Sysmon> 
