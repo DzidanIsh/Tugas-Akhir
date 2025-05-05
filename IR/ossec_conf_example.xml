@@ -1,0 +1,117 @@
+<!-- Bagian ini perlu ditambahkan ke file ossec.conf pada Wazuh Manager -->
+<!-- Lokasi default file: /var/ossec/etc/ossec.conf -->
+
+<!-- Konfigurasi integrasi Wazuh-MISP -->
+<integration>
+  <name>custom-misp</name>
+  <group>apache,web,syscheck</group>
+  <alert_format>json</alert_format>
+</integration>
+
+<!-- Contoh konfigurasi File Integrity Monitoring untuk server web Apache2 -->
+<syscheck>
+  <disabled>no</disabled>
+  
+  <!-- Interval pemeriksaan dalam detik (default 12 jam) -->
+  <frequency>43200</frequency>
+  
+  <!-- Direktori web server untuk dimonitor dengan FIM -->
+  <directories check_all="yes" realtime="yes" report_changes="yes">/var/www/html</directories>
+  <directories check_all="yes" realtime="yes" report_changes="yes">/etc/apache2</directories>
+  <directories check_all="yes" realtime="yes">/usr/lib/apache2/modules</directories>
+  
+  <!-- Direktori sistem penting -->
+  <directories check_all="yes" realtime="yes">/bin,/sbin</directories>
+  <directories check_all="yes" realtime="yes">/usr/bin,/usr/sbin</directories>
+  
+  <!-- File konfigurasi penting untuk dimonitor -->
+  <directories check_all="yes" realtime="yes" report_changes="yes">/etc/php</directories>
+  <directories check_all="yes" realtime="yes" report_changes="yes">/etc/ssl/certs</directories>
+  <directories check_all="yes" realtime="yes" report_changes="yes">/etc/ssl/private</directories>
+  
+  <!-- Monitoring pada file log penting -->
+  <directories check_all="yes" realtime="yes">/var/log/apache2</directories>
+  
+  <!-- Pengecualian untuk file yang sering berubah -->
+  <ignore>/var/www/html/temp</ignore>
+  <ignore>/var/www/html/cache</ignore>
+  <ignore>/var/log/apache2/access.log</ignore>
+  <ignore type="sregex">\.log$|\.tmp$|\.cache$</ignore>
+  
+  <!-- Opsi FIM lanjutan -->
+  <nodiff>/etc/ssl/private.key</nodiff>
+  <skip_nfs>yes</skip_nfs>
+  <skip_dev>yes</skip_dev>
+  <skip_proc>yes</skip_proc>
+  <skip_sys>yes</skip_sys>
+  <scan_on_start>yes</scan_on_start>
+</syscheck>
+
+<!-- Konfigurasi Log Collection untuk Apache2 -->
+<localfile>
+  <log_format>apache</log_format>
+  <location>/var/log/apache2/access.log</location>
+</localfile>
+
+<localfile>
+  <log_format>apache</log_format>
+  <location>/var/log/apache2/error.log</location>
+</localfile>
+
+<!-- Konfigurasi Log Collection untuk auditd (monitoring sistem) -->
+<localfile>
+  <log_format>audit</log_format>
+  <location>/var/log/audit/audit.log</location>
+</localfile>
+
+<!-- Konfigurasi untuk monitoring koneksi jaringan -->
+<command>
+  <name>netstat_listening_ports</name>
+  <executable>netstat</executable>
+  <arguments>-tulpn | sort</arguments>
+  <expect></expect>
+  <timeout_allowed>yes</timeout_allowed>
+</command>
+
+<command>
+  <name>check_open_ports</name>
+  <executable>lsof</executable>
+  <arguments>-i | sort</arguments>
+  <expect></expect>
+  <timeout_allowed>yes</timeout_allowed>
+</command>
+
+<!-- Konfigurasi rootcheck - mendeteksi rootkit dan perilaku mencurigakan -->
+<rootcheck>
+  <disabled>no</disabled>
+  <check_unixaudit>yes</check_unixaudit>
+  <check_files>yes</check_files>
+  <check_trojans>yes</check_trojans>
+  <check_dev>yes</check_dev>
+  <check_sys>yes</check_sys>
+  <check_pids>yes</check_pids>
+  <check_ports>yes</check_ports>
+  <check_if>yes</check_if>
+  <frequency>43200</frequency>
+  <rootkit_files>/var/ossec/etc/shared/rootkit_files.txt</rootkit_files>
+  <rootkit_trojans>/var/ossec/etc/shared/rootkit_trojans.txt</rootkit_trojans>
+  <skip_nfs>yes</skip_nfs>
+</rootcheck>
+
+<!-- Konfigurasi Vulnerability Detection untuk Ubuntu -->
+<vulnerability-detector>
+  <enabled>yes</enabled>
+  <interval>1d</interval>
+  <ignore_time>6h</ignore_time>
+  <run_on_start>yes</run_on_start>
+  
+  <provider name="canonical">
+    <enabled>yes</enabled>
+    <os>trusty</os>
+    <os>xenial</os>
+    <os>bionic</os>
+    <os>focal</os>
+    <os>jammy</os>
+    <update_interval>1h</update_interval>
+  </provider>
+</vulnerability-detector> 
