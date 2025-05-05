@@ -46,19 +46,19 @@ Arsitektur integrasi Wazuh-MISP adalah sebagai berikut:
 ## Komponen Konfigurasi
 
 ### 1. custom-misp.py
-Script Python yang mengintegrasikan Wazuh dengan MISP API untuk analisis indikator.
+Script Python yang mengintegrasikan Wazuh dengan MISP API untuk analisis indikator. [Lihat kode](https://github.com/DzidanIsh/Tugas-Akhir/blob/main/custom-misp.py)
 
 ### 2. custom-misp
-Wrapper script untuk menjalankan `custom-misp.py`.
+Wrapper script untuk menjalankan `custom-misp.py`. [Lihat kode](https://github.com/DzidanIsh/Tugas-Akhir/blob/main/custom-misp)
 
 ### 3. misp_rules.xml
-Berisi aturan khusus untuk mendeteksi dan mengklasifikasikan alert terkait MISP.
+Berisi aturan khusus untuk mendeteksi dan mengklasifikasikan alert terkait MISP. [Lihat kode](https://github.com/DzidanIsh/Tugas-Akhir/blob/main/misp_rules.xml)
 
 ### 4. active_response.sh
-Script untuk melakukan tindakan otomatis berdasarkan alert yang terdeteksi.
+Script untuk melakukan tindakan otomatis berdasarkan alert yang terdeteksi. [Lihat kode](https://github.com/DzidanIsh/Tugas-Akhir/blob/main/active_response.sh)
 
 ### 5. fail2ban-apache.sh
-Script untuk mengintegrasikan Wazuh dengan fail2ban untuk melindungi server Apache.
+Script untuk mengintegrasikan Wazuh dengan fail2ban untuk melindungi server Apache. [Lihat kode](https://github.com/DzidanIsh/Tugas-Akhir/blob/main/fail2ban-apache.sh)
 
 ## Instalasi dan Konfigurasi
 
