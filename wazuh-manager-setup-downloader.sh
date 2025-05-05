@@ -344,6 +344,14 @@ else
     <agents_disconnection_alert_time>0</agents_disconnection_alert_time>
   </global>
 
+  <!-- Konfigurasi koneksi remote yang diperlukan -->
+  <remote>
+    <connection>secure</connection>
+    <port>1514</port>
+    <protocol>tcp</protocol>
+    <queue_size>131072</queue_size>
+  </remote>
+  
   <alerts>
     <log_alert_level>3</log_alert_level>
     <email_alert_level>12</email_alert_level>
@@ -463,17 +471,29 @@ rm -rf "$TEMP_DIR"
 
 # Restart Wazuh jika sudah terinstal sebelumnya
 if systemctl is-active --quiet wazuh-manager; then
-    log "Memulai ulang Wazuh Manager..."
-    systemctl restart wazuh-manager
-    
-    # Validasi konfigurasi
-    if systemctl is-active --quiet wazuh-manager; then
-        log "Wazuh Manager berhasil dikonfigurasi dan berjalan."
+    log "Memvalidasi konfigurasi Wazuh Manager..."
+    if /var/ossec/bin/wazuh-control check-config; then
+        log "Konfigurasi valid, memulai ulang Wazuh Manager..."
+        systemctl restart wazuh-manager
+        
+        # Validasi konfigurasi
+        if systemctl is-active --quiet wazuh-manager; then
+            log "Wazuh Manager berhasil dikonfigurasi dan berjalan."
+        else
+            log_error "Wazuh Manager gagal berjalan. Periksa log dengan 'journalctl -u wazuh-manager'."
+        fi
     else
-        log_error "Wazuh Manager gagal berjalan. Periksa log dengan 'journalctl -u wazuh-manager'."
+        log_error "Konfigurasi Wazuh tidak valid. Periksa kesalahan di atas dan perbaiki konfigurasi."
+        log_error "Gunakan 'less /var/ossec/logs/ossec.log' untuk informasi lebih detail."
     fi
 else
-    log "Wazuh Manager berhasil dikonfigurasi. Jalankan 'systemctl start wazuh-manager' untuk memulai layanan."
+    log "Validasi konfigurasi Wazuh Manager..."
+    if /var/ossec/bin/wazuh-control check-config; then
+        log "Konfigurasi valid. Jalankan 'systemctl start wazuh-manager' untuk memulai layanan."
+    else
+        log_error "Konfigurasi Wazuh tidak valid. Periksa kesalahan di atas dan perbaiki konfigurasi."
+        log_error "Gunakan 'less /var/ossec/logs/ossec.log' untuk informasi lebih detail."
+    fi
 fi
 
 log "============================================================="
