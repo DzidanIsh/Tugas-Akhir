@@ -24,6 +24,19 @@ fi
 command -v git >/dev/null 2>&1 || error_exit "Git tidak ditemukan. Silakan install dengan: apt-get install git"
 command -v python3 >/dev/null 2>&1 || error_exit "Python3 tidak ditemukan. Silakan install dengan: apt-get install python3"
 
+# Konfigurasi identitas Git jika belum dikonfigurasi
+echo "Mengkonfigurasi identitas Git..."
+# Cek apakah user.email sudah dikonfigurasi global
+if ! git config --global user.email >/dev/null 2>&1; then
+    git config --global user.email "backup@system.local"
+    echo "Git user.email dikonfigurasi ke backup@system.local"
+fi
+# Cek apakah user.name sudah dikonfigurasi global
+if ! git config --global user.name >/dev/null 2>&1; then
+    git config --global user.name "Backup System"
+    echo "Git user.name dikonfigurasi ke Backup System"
+fi
+
 # Periksa apakah pip3 terinstall
 command -v pip3 >/dev/null 2>&1 || {
     echo "Pip3 tidak ditemukan. Menginstall pip3..."
