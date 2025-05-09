@@ -63,6 +63,16 @@ if [ ! -d ".git" ]; then
     error_exit "Repository Git tidak ditemukan di $WEB_DIR. Jalankan script instalasi terlebih dahulu."
 fi
 
+# Pastikan konfigurasi git lokal sudah diatur
+if ! git config --local user.email >/dev/null 2>&1; then
+    git config --local user.email "backup@system.local"
+    info_msg "Git user.email dikonfigurasi ke backup@system.local"
+fi
+if ! git config --local user.name >/dev/null 2>&1; then
+    git config --local user.name "Backup System"
+    info_msg "Git user.name dikonfigurasi ke Backup System"
+fi
+
 # Cek perubahan pada file
 info_msg "Memeriksa perubahan pada file..."
 git status --porcelain
