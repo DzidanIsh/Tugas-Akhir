@@ -98,7 +98,7 @@ git commit -m "Backup at $TIMESTAMP" || {
 REMOTE_EXISTS=$(git remote | grep "monitoring" || echo "")
 if [ -z "$REMOTE_EXISTS" ]; then
     info_msg "Mengatur remote repository..."
-    git remote add monitoring "ssh://$MONITOR_USER@$MONITOR_IP:22$BACKUP_DIR" || 
+    git remote add monitoring "$MONITOR_USER@$MONITOR_IP:$BACKUP_DIR" || 
         error_exit "Gagal mengatur remote repository."
 fi
 
@@ -114,8 +114,8 @@ git push -u monitoring master || {
     # Jika push gagal, coba solusi alternatif
     info_msg "Push standar gagal, mencoba cara alternatif..."
     
-    # Jika remote tidak valid, coba konfigurasi ulang
-    git remote set-url monitoring "ssh://$MONITOR_USER@$MONITOR_IP:22$BACKUP_DIR"
+    # Jika remote tidak valid, coba konfigurasi ulang dengan format yang benar
+    git remote set-url monitoring "$MONITOR_USER@$MONITOR_IP:$BACKUP_DIR"
     
     # Coba push lagi
     git push -u monitoring master || {
