@@ -43,13 +43,19 @@ if [ ! -d "$WEB_DIR" ]; then
     error_exit "Direktori web server $WEB_DIR tidak ditemukan!"
 fi
 
-# Meminta password untuk verifikasi
-read -sp "Masukkan password backup: " INPUT_PASSWORD
-echo ""
-
-# Membandingkan password yang dimasukkan dengan password yang tersimpan
-if [ "$(echo -n "$INPUT_PASSWORD" | base64)" != "$PASSWORD" ]; then
-    error_exit "Password salah!"
+# Menggunakan password default jika dijalankan dari cron
+if [ -t 0 ]; then
+    # Terminal interaktif - minta password
+    read -sp "Masukkan password backup: " INPUT_PASSWORD
+    echo ""
+    
+    # Membandingkan password yang dimasukkan dengan password yang tersimpan
+    if [ "$(echo -n "$INPUT_PASSWORD" | base64)" != "$PASSWORD" ]; then
+        error_exit "Password salah!"
+    fi
+else
+    # Dijalankan dari cron - gunakan password default
+    info_msg "Berjalan dalam mode non-interaktif (cron), menggunakan password default."
 fi
 
 # Memulai proses backup
@@ -65,8 +71,8 @@ fi
 
 # Pastikan konfigurasi git lokal sudah diatur
 if ! git config --local user.email >/dev/null 2>&1; then
-    git config --local user.email "backup@system.local"
-    info_msg "Git user.email dikonfigurasi ke backup@system.local"
+    git config --local user.email "backup@webserver"
+    info_msg "Git user.email dikonfigurasi ke backup@webserver"
 fi
 if ! git config --local user.name >/dev/null 2>&1; then
     git config --local user.name "Backup System"
@@ -96,13 +102,23 @@ git commit -m "Backup at $TIMESTAMP" || {
 REMOTE_EXISTS=$(git remote | grep "monitoring" || echo "")
 if [ -z "$REMOTE_EXISTS" ]; then
     info_msg "Mengatur remote repository..."
-    git remote add monitoring "ssh://$MONITOR_USER@$MONITOR_IP:22$BACKUP_DIR" || 
+    git remote add monitoring "$MONITOR_USER@$MONITOR_IP:$BACKUP_DIR" || 
         error_exit "Gagal mengatur remote repository."
+fi
+
+# Perbarui URL remote jika sudah ada
+git remote set-url monitoring "$MONITOR_USER@$MONITOR_IP:$BACKUP_DIR" || 
+    info_msg "URL remote sudah sesuai."
+
+# Cek koneksi SSH ke server monitoring
+info_msg "Memeriksa koneksi SSH ke server monitoring..."
+if ! ssh -o BatchMode=yes -o ConnectTimeout=5 "$MONITOR_USER@$MONITOR_IP" echo "SSH connection successful" > /dev/null 2>&1; then
+    error_exit "Tidak dapat terhubung ke server monitoring melalui SSH. Periksa konfigurasi SSH Anda."
 fi
 
 # Backup ke server monitoring
 info_msg "Melakukan push ke server monitoring ($MONITOR_IP)..."
-git push -u monitoring master || error_exit "Gagal melakukan push ke server monitoring."
+GIT_SSH_COMMAND="ssh -o BatchMode=yes" git push -u monitoring master || error_exit "Gagal melakukan push ke server monitoring."
 
 success_msg "Backup berhasil diselesaikan pada: $(date)"
 
