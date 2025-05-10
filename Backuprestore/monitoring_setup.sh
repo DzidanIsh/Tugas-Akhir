@@ -296,5 +296,17 @@ if [ "$CREATE_USER" = "y" ] || [ "$CREATE_USER" = "Y" ]; then
 fi
 echo "3. Path direktori backup: $BACKUP_DIR"
 echo ""
+echo "Perintah untuk mengatur repository Git di server web:"
+if [ "$CREATE_USER" = "y" ] || [ "$CREATE_USER" = "Y" ]; then
+    echo "   git remote add monitoring $BACKUP_USER@${IP_ADDRESS:-$(hostname -I | awk '{print $1}')}:$BACKUP_DIR"
+else
+    echo "   git remote add monitoring root@${IP_ADDRESS:-$(hostname -I | awk '{print $1}')}:$BACKUP_DIR"
+fi
+echo ""
+echo "Catatan penting:"
+echo "- Jangan gunakan format 'ssh://user@host:port/path' karena dapat menyebabkan error"
+echo "- Gunakan format 'user@host:path' untuk URL Git SSH"
+echo "- Pastikan untuk melakukan ssh-copy-id terlebih dahulu dari server web"
+echo ""
 echo "Server telah siap untuk menerima backup dari server web."
 echo "=================================================================" 
