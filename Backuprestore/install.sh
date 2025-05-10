@@ -154,8 +154,8 @@ git commit -m "Initial backup of web server content" || {
 info_msg "Mengkonfigurasi remote repository..."
 # Hapus remote sebelumnya jika ada
 git remote remove monitoring 2>/dev/null
-# Tambahkan remote baru
-git remote add monitoring "ssh://$MONITOR_USER@$MONITOR_IP:22$BACKUP_DIR" || 
+# Tambahkan remote baru dengan format yang benar
+git remote add monitoring "$MONITOR_USER@$MONITOR_IP:$BACKUP_DIR" || 
     error_exit "Gagal mengatur remote repository."
 
 # Menyalin script backup dan restore ke lokasi yang tepat
