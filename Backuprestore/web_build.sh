@@ -22,15 +22,36 @@ a2dismod security2 2>/dev/null
 sed -i 's/Options Indexes FollowSymLinks/Options Indexes FollowSymLinks ExecCGI/' /etc/apache2/apache2.conf
 sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 
-# Membuat .htaccess yang mengizinkan eksekusi script
+# Mengonfigurasi Apache untuk mengizinkan eksekusi script
 echo "[+] Mengkonfigurasi izin eksekusi file upload..."
-cat << 'EOF' > /var/www/html/.htaccess
+
+# Konfigurasi di file konfigurasi Apache, bukan di .htaccess
+cat << 'EOF' > /etc/apache2/conf-available/rentan-upload.conf
 <Directory "/var/www/html">
     Options +ExecCGI +Indexes +FollowSymLinks
     AddHandler cgi-script .php .php5 .phtml .pl .py .jsp .asp .htm .html .shtml
     AllowOverride All
     Require all granted
 </Directory>
+EOF
+
+# Mengaktifkan konfigurasi
+a2enconf rentan-upload
+
+# Membuat .htaccess yang benar (tanpa direktif <Directory>)
+cat << 'EOF' > /var/www/html/.htaccess
+# Mengizinkan eksekusi semua jenis file
+Options +ExecCGI +Indexes +FollowSymLinks
+AddHandler cgi-script .php .php5 .phtml .pl .py .jsp .asp .htm .html .shtml
+AddHandler application/x-httpd-php .php .php5 .phtml .html .htm
+
+# Disable PHP security features
+php_flag display_errors on
+php_flag display_startup_errors on
+php_value error_reporting 32767
+php_flag safe_mode off
+php_flag register_globals on
+php_flag magic_quotes_gpc off
 EOF
 
 # Membuat direktori uploads
@@ -247,6 +268,13 @@ cat << 'EOF' > /var/www/html/index.php
 </html>
 EOF
 
+# Membuat file phpinfo untuk debugging
+echo "[+] Membuat file info.php untuk debugging..."
+cat << 'EOF' > /var/www/html/info.php
+<?php
+phpinfo();
+EOF
+
 # Restart Apache
 echo "[+] Merestart Apache..."
 systemctl restart apache2
@@ -266,6 +294,7 @@ echo "====================================================="
 echo "Website rentan berhasil dibuat!"
 echo "Anda dapat mengakses website melalui: http://$LOCAL_IP/"
 echo "Direktori uploads: http://$LOCAL_IP/uploads/"
+echo "Info PHP: http://$LOCAL_IP/info.php"
 echo "====================================================="
 echo "PERINGATAN: Website ini dengan sengaja dibuat rentan."
 echo "            JANGAN gunakan di lingkungan produksi!"
