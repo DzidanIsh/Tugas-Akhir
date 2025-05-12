@@ -54,15 +54,67 @@ ensure_dir_exists() {
 
 # Fungsi untuk memeriksa apakah Wazuh Manager terinstall
 check_wazuh_manager_installed() {
+    # Cek keberadaan direktori Wazuh
     if [ ! -d "/var/ossec" ]; then
         error "Wazuh Manager tidak terinstall. Silakan install Wazuh Manager terlebih dahulu."
     fi
     
-    if [ ! -f "/var/ossec/bin/ossec-remoted" ]; then
-        error "Instalasi Wazuh Manager tidak lengkap. Silakan periksa instalasi Wazuh."
+    # Cek status layanan Wazuh Manager
+    if systemctl is-active --quiet wazuh-manager; then
+        info "Wazuh Manager terdeteksi dan aktif pada sistem"
+        return 0
     fi
     
-    info "Wazuh Manager terdeteksi pada sistem"
+    # Coba cek dengan cara lain (untuk instalasi non-standard)
+    if ps aux | grep -q "[w]azuh-manager"; then
+        info "Wazuh Manager terdeteksi berjalan pada sistem (dari proses)"
+        return 0
+    fi
+    
+    # Coba cari file ossec-remoted di mana pun dalam direktori Wazuh
+    REMOTED_PATH=$(find /var/ossec -name "ossec-remoted" 2>/dev/null)
+    
+    if [ -n "$REMOTED_PATH" ]; then
+        info "File ossec-remoted ditemukan di: $REMOTED_PATH"
+        return 0
+    fi
+    
+    # Cek struktur direktori Wazuh yang terinstall
+    if [ -d "/var/ossec/framework" ] || [ -d "/var/ossec/queue" ]; then
+        info "Struktur direktori Wazuh Manager terdeteksi"
+        return 0
+    fi
+    
+    # Cek file-file penting Wazuh
+    if [ -f "/var/ossec/bin/wazuh-control" ] || [ -f "/var/ossec/bin/ossec-control" ]; then
+        info "Control script Wazuh terdeteksi"
+        return 0
+    fi
+    
+    # Untuk instalasi yang menggunakan format Wazuh 4.x+
+    if [ -f "/usr/bin/filebeat" ] && [ -d "/etc/filebeat" ]; then
+        if grep -q "wazuh" /etc/filebeat/filebeat.yml 2>/dev/null; then
+            info "Wazuh dengan Filebeat terdeteksi"
+            return 0
+        fi
+    fi
+    
+    # Cek khusus untuk instalasi via wazuh-install.sh
+    if [ -d "/var/ossec/logs" ] && [ -f "/var/ossec/etc/ossec.conf" ]; then
+        info "Instalasi Wazuh terdeteksi melalui struktur file dasar"
+        warning "Struktur file Wazuh non-standar, tapi kelihatannya Manager terinstall. Melanjutkan setup..."
+        return 0
+    fi
+    
+    # Instalasi dari wazuh-install.sh mungkin menggunakan struktur lain
+    if systemctl list-units --type=service | grep -q "wazuh"; then
+        info "Layanan Wazuh terdeteksi pada sistem"
+        warning "Struktur layanan Wazuh non-standar. Melanjutkan setup..."
+        return 0
+    fi
+    
+    # Jika sampai di sini, kemungkinan Wazuh Manager belum terinstall
+    error "Instalasi Wazuh Manager tidak terdeteksi atau tidak lengkap. Silakan periksa instalasi Wazuh."
 }
 
 # Fungsi untuk membuat direktori rules jika belum ada
@@ -227,12 +279,35 @@ add_command_definition() {
     
     info "Menambahkan definisi command di $manager_conf"
     
-    # Periksa apakah definisi command sudah ada
-    if grep -q "<command>.*<name>web-restore</name>" "$manager_conf"; then
+    # Cek format tag command di ossec.conf
+    local command_tag="name"
+    if grep -q "<command>" "$manager_conf" && grep -q "<n>" "$manager_conf"; then
+        command_tag="n"
+        info "Terdeteksi format command tag lama: <n>"
+    else
+        info "Menggunakan format command tag baru: <name>"
+    fi
+    
+    # Periksa apakah definisi command sudah ada (cek kedua format yang mungkin)
+    if grep -q "<command>.*<name>web-restore</name>" "$manager_conf" || grep -q "<command>.*<n>web-restore</n>" "$manager_conf"; then
         warning "Definisi command web-restore sudah ada. Tidak ada perubahan."
     else
-        # Tambahkan definisi command
-        cat >> "$manager_conf" << 'EOF'
+        # Tambahkan definisi command dengan format yang benar
+        if [ "$command_tag" = "n" ]; then
+            # Format lama
+            cat >> "$manager_conf" << 'EOF'
+
+<!-- Command definition for web anti-defacement -->
+<command>
+  <n>web-restore</n>
+  <executable>web_restore.sh</executable>
+  <expect>srcip</expect>
+  <timeout_allowed>yes</timeout_allowed>
+</command>
+EOF
+        else
+            # Format baru (4.7+)
+            cat >> "$manager_conf" << 'EOF'
 
 <!-- Command definition for web anti-defacement -->
 <command>
@@ -242,6 +317,7 @@ add_command_definition() {
   <timeout_allowed>yes</timeout_allowed>
 </command>
 EOF
+        fi
         success "Definisi command berhasil ditambahkan"
     fi
 }
@@ -329,12 +405,93 @@ EOF
 restart_wazuh_manager() {
     info "Memulai ulang layanan Wazuh Manager"
     
-    systemctl restart wazuh-manager || service wazuh-manager restart || /var/ossec/bin/ossec-control restart
+    # Variabel untuk lacak status restart
+    local restart_success=false
     
-    if [ $? -eq 0 ]; then
-        success "Wazuh Manager berhasil dimulai ulang"
+    # Coba restart menggunakan berbagai metode yang mungkin tersedia
+    # Urutan metode: systemd > service command > ossec/wazuh control script
+    
+    # Metode 1: Systemd (paling umum di sistem modern)
+    if systemctl list-unit-files | grep -q "wazuh-manager.service"; then
+        info "Mencoba restart menggunakan systemctl..."
+        if systemctl restart wazuh-manager; then
+            success "Wazuh Manager berhasil dimulai ulang dengan systemctl"
+            restart_success=true
+        else
+            warning "Gagal restart menggunakan systemctl"
+        fi
+    fi
+    
+    # Jika Metode 1 gagal, coba Metode 2: Service command
+    if [ "$restart_success" = false ] && command -v service >/dev/null 2>&1; then
+        info "Mencoba restart menggunakan service command..."
+        if service wazuh-manager restart; then
+            success "Wazuh Manager berhasil dimulai ulang dengan service command"
+            restart_success=true
+        else
+            warning "Gagal restart menggunakan service command"
+        fi
+    fi
+    
+    # Jika Metode 2 gagal, coba Metode 3: Wazuh control script
+    if [ "$restart_success" = false ]; then
+        info "Mencoba restart menggunakan script kontrol Wazuh..."
+        
+        # Cek script kontrol mana yang tersedia
+        if [ -f "/var/ossec/bin/wazuh-control" ]; then
+            if /var/ossec/bin/wazuh-control restart; then
+                success "Wazuh Manager berhasil dimulai ulang dengan wazuh-control"
+                restart_success=true
+            else
+                warning "Gagal restart menggunakan wazuh-control"
+            fi
+        elif [ -f "/var/ossec/bin/ossec-control" ]; then
+            if /var/ossec/bin/ossec-control restart; then
+                success "Wazuh Manager berhasil dimulai ulang dengan ossec-control"
+                restart_success=true
+            else
+                warning "Gagal restart menggunakan ossec-control"
+            fi
+        fi
+    fi
+    
+    # Untuk instalasi wazuh melalui wazuh-install.sh (versi 4.7+)
+    if [ "$restart_success" = false ] && systemctl list-unit-files | grep -q "wazuh-indexer\|wazuh-server\|wazuh-dashboard"; then
+        info "Terdeteksi instalasi Wazuh 4.7+ dari wazuh-install.sh..."
+        
+        # Coba restart semua komponen Wazuh
+        local restart_components=false
+        
+        if systemctl restart wazuh-manager 2>/dev/null; then
+            info "wazuh-manager berhasil direstart"
+            restart_components=true
+        fi
+        
+        if systemctl restart wazuh-indexer 2>/dev/null; then
+            info "wazuh-indexer berhasil direstart"
+            restart_components=true
+        fi
+        
+        if systemctl restart filebeat 2>/dev/null; then
+            info "filebeat berhasil direstart"
+            restart_components=true
+        fi
+        
+        if [ "$restart_components" = true ]; then
+            success "Komponen Wazuh berhasil dimulai ulang"
+            restart_success=true
+        fi
+    fi
+    
+    # Jika semua metode gagal
+    if [ "$restart_success" = false ]; then
+        warning "Gagal memulai ulang Wazuh Manager dengan semua metode yang tersedia"
+        warning "Anda mungkin perlu me-restart layanan secara manual setelah setup selesai"
+        warning "Mencoba melanjutkan setup tanpa restart..."
     else
-        error "Gagal memulai ulang Wazuh Manager"
+        # Tunggu sebentar agar layanan dapat diinisialisasi dengan benar
+        info "Menunggu layanan Wazuh Manager diinisialisasi..."
+        sleep 5
     fi
 }
 
@@ -415,4 +572,18 @@ main() {
 
 # Jalankan fungsi utama
 main
-exit 0 
+exit 0
+
+detect_installation_type() {
+    # Periksa tipe instalasi
+    if [ -f "/var/ossec/etc/wazuh-indexer/" ]; then
+        INSTALL_TYPE="wazuh-install"
+        info "Tipe instalasi terdeteksi: wazuh-install.sh (all-in-one)"
+    elif [ -f "/etc/filebeat/filebeat.yml" ] && grep -q "wazuh" "/etc/filebeat/filebeat.yml"; then
+        INSTALL_TYPE="distributed"
+        info "Tipe instalasi terdeteksi: distributed dengan filebeat"
+    else
+        INSTALL_TYPE="standard"
+        info "Tipe instalasi terdeteksi: standard Wazuh Manager"
+    fi
+} 
